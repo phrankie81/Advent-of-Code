@@ -23,8 +23,12 @@ def seat_finder(str, range):
     return range
 
 
+def find_missing(lst):
+    return [x for x in range(lst[0], lst[-1]+1) if x not in lst]
+
+
 def compute(input_str: str) -> int:
-    maxnumber = 1
+    list_of_ids = []
     for line in input_str.split('\n'):
         myrange = [0, 127]
         seatrange = [0, 7]
@@ -36,11 +40,12 @@ def compute(input_str: str) -> int:
             seatrange = seat_finder(str, seatrange)
 
         seat = seatrange[1]
-        passport_id = row * 8 + seat
-        if passport_id > maxnumber:
-            maxnumber = passport_id
-    return maxnumber
 
+        passport_id = row * 8 + seat
+        list_of_ids.append(passport_id)
+    list_of_ids.sort()
+    missing = find_missing(list_of_ids)
+    return int(missing[0])
 
 
 TEST_INPUTS = [
