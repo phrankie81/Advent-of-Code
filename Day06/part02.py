@@ -9,11 +9,10 @@ def compute(input_str: str) -> int:
     data_list = input_str.split('\n\n')
     groups = []
     for line in data_list:
-        gr = "".join(line.split("\n"))
+        gr = (line.split("\n"))
         groups.append(gr)
     print(data_list)
     print(groups)
-
     counts = []
     for i in groups:
         number = Counter(i)
