@@ -1,5 +1,4 @@
 from pathlib import Path
-from collections import Counter
 import pytest
 
 INPUTS_FILE = Path(__file__).parent / "input.txt"
@@ -7,17 +6,12 @@ INPUTS_FILE = Path(__file__).parent / "input.txt"
 
 def compute(input_str: str) -> int:
     data_list = input_str.split('\n\n')
-    groups = []
-    for line in data_list:
-        gr = (line.split("\n"))
-        groups.append(gr)
-    print(data_list)
-    print(groups)
-    counts = []
-    for i in groups:
-        number = Counter(i)
-        counts.append(len(number))
-    return sum(counts)
+    groups = [line.split() for line in data_list]
+    number = []
+    for group in groups:
+        count = len(set.intersection(*(set(s) for s in group)))
+        number.append(count)
+    return sum(number)
 
 
 TEST_INPUTS =[('''abc
@@ -34,7 +28,7 @@ a
 a
 a
 
-b''', 11)]
+b''', 6)]
 
 
 @pytest.mark.parametrize("input_str,expected", TEST_INPUTS)
